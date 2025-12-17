@@ -42,3 +42,29 @@ class SlowTests(unittest.TestCase):
         finally:
             # Cleanup
             os.remove(temp_file)
+
+
+test_fast_math_add = FastTests('test_fast_math_add')
+test_file_operation = SlowTests('test_file_operation')
+
+suite = unittest.TestSuite(tests=(
+    test_fast_math_add,
+    test_file_operation,
+))
+runner = unittest.TextTestRunner(verbosity=2)
+runner.run(suite)
+
+suite2 = unittest.TestSuite()
+suite2.addTest(test_fast_math_add)
+suite2.addTest(test_file_operation)
+
+
+suite3 = unittest.TestSuite()
+suite3.addTests(tests=(
+    test_fast_math_add,
+    test_file_operation,
+))
+
+
+loader = unittest.TestLoader()
+fast_suite = loader.loadTestsFromTestCase(FastTests)
