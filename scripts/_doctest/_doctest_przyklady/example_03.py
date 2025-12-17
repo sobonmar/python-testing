@@ -57,7 +57,7 @@ class BankAccount:
             initial_balance: Starting balance (default 0.0)
 
         >>> account = BankAccount("54321")
-        >>> account.balance
+        >>> account.balance  # doctest: +SKIP
         0.0
         """
         self.account_number = account_number
@@ -165,3 +165,16 @@ def validate_email(email):
 
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return bool(re.match(pattern, email))
+
+
+# Sposoby uruchamiania
+# python -m doctest example_03.py
+# python -m doctest example_03.py -v  (verbose)
+
+if __name__ == "__main__":
+    doctest.testmod(verbose=True)
+    # python example_01.py -v
+
+    doctest.run_docstring_examples(validate_email, globals(), verbose=True)
+    # doctest.run_docstring_examples(BankAccount, globals(), verbose=True)
+    # doctest.run_docstring_examples(BankAccount.deposit, globals(), verbose=True)

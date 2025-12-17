@@ -1,7 +1,23 @@
 # Docktesty klas
+import doctest
+
+
 class Calculator:
     """
     Prosta klasa kalkulatora z doctest.
+
+    >>> calc = Calculator()
+    >>> calc.result
+    0
+
+    >>> calc.add(8)
+    8
+
+    >>> calc.divide(4)
+    2.0
+
+    >>> calc.clear()
+    0
     """
 
     def __init__(self):
@@ -15,6 +31,11 @@ class Calculator:
             
         Returns:
             Updated result after addition
+
+        Examples:
+        >>> calc = Calculator()
+        >>> calc.add(5)
+        5
         """
         self.result += value
         return self.result

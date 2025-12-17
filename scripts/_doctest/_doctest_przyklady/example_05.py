@@ -1,4 +1,7 @@
 # Doctest flags/directives - most common examples
+import doctest
+
+
 def example_ellipsis():
     """
     ELLIPSIS - replaces ... with any text
@@ -75,3 +78,7 @@ def example_multiple_flags():
     '...-...-...-...-...'
     """
     ...
+
+
+if __name__ == "__main__":
+    doctest.testmod(optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
