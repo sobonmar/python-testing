@@ -1,4 +1,6 @@
 # Wbudowane fikstury pytest - capsys
+import sys
+
 import pytest
 
 
@@ -10,7 +12,7 @@ def print_user_info(name, age):
 
 
 def test_capsys_captures_stdout(capsys):
-    """capsys - przechwytuje stdout/stderr do testowania"""
+    """Test capsys fixture - captures stdout/stderr for testing"""
 
     print_user_info("John", 25)
 
@@ -24,23 +26,21 @@ def test_capsys_captures_stdout(capsys):
 
 
 def test_capsys_multiple_captures(capsys):
-    """capsys można wywoływać wielokrotnie w jednym teście"""
+    """Test multiple capsys captures in single test"""
 
     print("First output")
-    first = capsys.readouterr()  # Pierwszy capture
+    first = capsys.readouterr()
     assert first.out == "First output\n"
 
     print("Second output")
-    second = capsys.readouterr()  # Drugi capture
+    second = capsys.readouterr()
     assert second.out == "Second output\n"
 
     assert first.out != second.out
 
 
 def test_capsys_with_stderr(capsys):
-    """capsys przechwytuje też stderr"""
-    import sys
-
+    """Test capsys capturing both stdout and stderr"""
     print("Normal output")
     print("Error message", file=sys.stderr)
 

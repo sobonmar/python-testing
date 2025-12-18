@@ -1,24 +1,14 @@
 # Wbudowane fikstury pytest - tmp_path
-
-#   pathlib.Path API:
-#   - / operator = łączenie ścieżek
-#   - write_text() = tworzenie pliku z contentem
-#   - read_text() = odczytywanie pliku
-#   - exists() = sprawdzenie czy plik istnieje
+CONTENT = "content"
 
 
-def save_data(filepath, data):
-    """Function that creates files"""
-    filepath.write_text(data)
-    return filepath.exists()
+def test_create_file(tmp_path):
+    """Test tmp_path fixture - creates temporary directory with file"""
 
+    d = tmp_path / "sub"
+    d.mkdir()
+    p = d / "hello.txt"
+    p.write_text(CONTENT, encoding="utf-8")
 
-def test_tmp_path_creates_temp_directory(tmp_path):
-    """tmp_path - automatyczny temporary directory (pathlib)"""
-
-    test_file = tmp_path / "data.txt"
-
-    result = save_data(test_file, "Hello World")
-
-    assert result is True
-    assert test_file.read_text() == "Hello World"
+    assert p.read_text(encoding="utf-8") == CONTENT
+    assert len(list(tmp_path.iterdir())) == 1

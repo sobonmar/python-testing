@@ -1,5 +1,4 @@
 # Wbudowane fikstury pytest - caplog
-import pytest
 import logging
 
 

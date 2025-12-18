@@ -1,4 +1,4 @@
-# patch get_joke
+# patch `main.requests`
 import unittest
 
 

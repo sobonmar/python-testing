@@ -1,4 +1,4 @@
-# patch get_joke()
+# patch `main.get_joke()`
 import unittest
 
 

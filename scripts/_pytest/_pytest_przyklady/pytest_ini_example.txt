@@ -1,0 +1,112 @@
+# pytest.ini - przykład z najpopularniejszymi opcjami
+# Plik nazwany .txt żeby pytest go nie czytał jako konfiguracji
+# wszystkie opcje w pytest.ini idą zawsze do jednej sekcji - [tool:pytest]
+[pytest]
+
+# PODSTAWOWE OPCJE
+# ================
+
+# Minimalna wersja pytest
+minversion = 6.0
+
+# Katalogi do przeszukiwania testów
+testpaths = tests src
+
+# Wzorce nazw plików testowych
+python_files = test_*.py *_test.py
+
+# Wzorce nazw klas testowych  
+python_classes = Test*
+
+# Wzorce nazw funkcji/metod testowych
+python_functions = test_*
+
+# MARKERY
+# =======
+
+# Rejestracja markerów (żeby uniknąć ostrzeżeń)
+markers =
+    slow: marks tests as slow (deselect with '-m "not slow"')
+    integration: marks tests as integration tests
+    unit: marks tests as unit tests
+    smoke: marks tests as smoke tests
+    api: marks tests as API tests
+    database: marks tests requiring database
+    external: marks tests requiring external services
+
+# OSTRZEŻENIA I LOGI
+# ==================
+
+# Filtrowanie ostrzeżeń
+filterwarnings =
+    ignore::UserWarning
+    ignore::DeprecationWarning
+    error::FutureWarning
+
+# Poziom logowania
+log_level = INFO
+
+# Format logów w testach
+log_format = %(asctime)s [%(levelname)8s] %(name)s: %(message)s
+
+# Format daty w logach
+log_date_format = %Y-%m-%d %H:%M:%S
+
+# Czy pokazywać logi na żywo podczas testów
+log_cli = true
+
+# OPCJE URUCHAMIANIA
+# ==================
+
+# Domyślne argumenty dla pytest
+addopts = 
+    -ra
+    --strict-markers
+    --strict-config
+    --cov=src
+    --cov-branch
+    --cov-report=term-missing
+    --cov-report=html:htmlcov
+    --cov-fail-under=80
+
+# Wyjaśnienie addopts:
+# -ra                    = pokaż podsumowanie wszystkich testów
+# --strict-markers       = błąd przy niezarejestrowanych markerach
+# --strict-config        = błąd przy niepoprawnej konfiguracji
+# --cov=src              = coverage dla katalogu src
+# --cov-branch           = branch coverage (nie tylko line coverage)
+# --cov-report=term-missing = pokaż brakujące linie w terminalu
+# --cov-report=html      = generuj raport HTML
+# --cov-fail-under=80    = fail jeśli coverage < 80%
+
+# INNE POPULARNE OPCJE
+# ====================
+
+# Katalog z conftest.py
+confcutdir = tests
+
+# Nie szukaj testów w __pycache__
+norecursedirs = __pycache__ *.egg .eggs dist build docs .git .tox
+
+# Maksymalna długość diffs w assert
+maxfail = 1
+
+# Czy łączyć stdout/stderr
+capture = sys
+
+# Format nazw testów w output
+console_output_style = progress
+
+# Katalog dla plików tymczasowych pytest
+cache_dir = .pytest_cache
+
+# WTYCZKI
+# =======
+
+# Wyłącz niepotrzebne wtyczki (dla szybkości)
+# addopts = -p no:cacheprovider -p no:stepwise
+
+# XDIST (parallel testing)
+# ========================
+# Jeśli używasz pytest-xdist:
+# addopts = -n auto  # użyj wszystkich dostępnych CPU
