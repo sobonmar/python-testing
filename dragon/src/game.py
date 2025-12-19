@@ -13,6 +13,7 @@ Smok przy tworzeniu ma losowe punkty życia
 True
 
 Ustaw inicjalną pozycję smoka na x=50, y=100
+>>> dragon = Dragon('Wawelski', position_x=50, position_y=100)
 
 Pobierz aktualną pozycję
 
@@ -45,10 +46,14 @@ from random import randint
 
 
 class Dragon:
+    position_y: int
+    position_x: int
     name: str
     health: int
 
-    def __init__(self, name: str, /) -> None:
+    def __init__(self, name: str, /, *, position_x: int = 0, position_y: int = 0) -> None:
+        self.position_x = position_x
+        self.position_y = position_y
         self.health = randint(50, 100)
         self.name = name
 
@@ -56,7 +61,7 @@ class Dragon:
 class DragonTest(unittest.TestCase):
     def test_init_name_positional(self):
         dragon = Dragon("Wawelski")
-        self.assertEqual(dragon.name,  "Wawelski")
+        self.assertEqual(dragon.name, "Wawelski")
 
     def test_init_name_keyword(self):
         with self.assertRaises(TypeError):
@@ -69,3 +74,14 @@ class DragonTest(unittest.TestCase):
     def test_health_init(self):
         dragon = Dragon("Wawelski")
         self.assertIn(dragon.health, range(50, 101))
+
+    def test_init_position_keyword(self):
+        dragon = Dragon("Name", position_x=1, position_y=2)
+        self.assertEqual(dragon.position_x, 1)
+        self.assertEqual(dragon.position_y, 2)
+
+    def test_init_position_positional(self):
+        with self.assertRaises(TypeError):
+            Dragon('Name', 1, y=2)  # noqa
+        with self.assertRaises(TypeError):
+            Dragon('Name', 1, 2)  # noqa
